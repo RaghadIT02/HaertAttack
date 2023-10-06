@@ -30,8 +30,8 @@ https://www.kaggle.com/datasets/pritsheta/heart-attack
 |exang              |Binary     | exercise induced angina                          |
 
 Class label:
--target to Heart Attack accurrance
--not target to Heart Attackn accurrance
+-target of Heart Attack accurrance
+-not target of Heart Attackn accurrance
 
 
 
