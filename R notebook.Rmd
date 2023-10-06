@@ -6,9 +6,6 @@
 
 
 
-
-
-
 ## The goal of collecting this dataset 
 our goal is to detect symptons of Heart Attack and prevent it from accurring
 
@@ -38,8 +35,9 @@ https://www.kaggle.com/datasets/pritsheta/heart-attack
                                  0: normal -- Value 1: having ST-T wave abnormality|
 |exang              |Binary     | exercise induced angina                          |
 
-
-
+Class label:
+-target to Heart Attack accurrance
+-not target to Heart Attackn accurrance
 
 
 
