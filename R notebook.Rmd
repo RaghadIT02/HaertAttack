@@ -7,7 +7,7 @@
 
 
 ## The goal of collecting this dataset 
-our goal is to detect symptons of Heart Attack and prevent it from accurring
+our goal is to Identify whether the chances of of a heart attack occurrence is high low for the patient
 
 
 
