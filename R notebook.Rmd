@@ -1,15 +1,9 @@
 ---
 "Heart Attack"
 ---
-
-
-
-
-
 ## The goal of collecting this dataset 
+
 our goal is to Identify whether the chances of of a heart attack occurrence is high low for the patient
-
-
 
 ## The source of the dataset, include link\URL 
 
@@ -38,10 +32,6 @@ https://www.kaggle.com/datasets/pritsheta/heart-attack
 Class label:
 -target to Heart Attack accurrance
 -not target to Heart Attackn accurrance
-
-
-
-
 
 
 
