@@ -1,4 +1,4 @@
-Heart Attack
+IT326 project |Heart Attack|
 -----------------------------------------------------------------------------------------------
 
 Cardiovascular diseases stay the leading cause of death globally). Early detection of the symptoms is important to prevent the disease from fully developing and reduce premature mortality.Classic heart attacks are characterised by severe chest pain and pressure,pain in the arm, neck or jaw. But nearly half of
@@ -14,7 +14,7 @@ student name :
 |4-Sarah Alghanim  |
 
 ------------------------
-"motivation"
+" project motivation"
 --------------------
 We selected this dataset Since heart attacks are the most popular cause of death globally, we need to identify the existence of the symptoms early to be able to prevent the occurrence of a heart attack, which more commonly happens to women
 
