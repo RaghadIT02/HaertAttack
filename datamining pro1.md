@@ -138,7 +138,7 @@ with(dataset, plot(age,chol, main = "Scatter Plot", xlab = "Age", ylab="chol"))
 Because high cholesterol is one of the leading causes of heart attacks, we wanted to see if age and cholesterol are correlated, but the scatter plot shows us that the is no correlation between the two attributes.
 
 Bar plot
-
+There is no point in using bar plots because  the frequency of one symptom (ex: high blood pressure alone ) is not enough to decide whether the patients are likely to have a heart attack or not
 
 
 
