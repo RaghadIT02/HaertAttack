@@ -189,6 +189,11 @@ dataset$thal <- normalize(dataset$thal)
 ```
 
 ------------------------------------
+feature selection
+------------------------------------
+we did not applly feature selection beacause the number of attribute is small and we will  neeed them.
+
+------------------------------------
 print the final preprocessed dataset
 ------------------------------------
 ```{r}
