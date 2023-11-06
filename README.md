@@ -9,7 +9,7 @@ Silent heart attacks are more common among women and described by such symptoms 
 student name :
 -----------------
 |1- taif alrubeaan |
-|2-Raghad Alboqam  |
+|2-Raghad Alboqami |
 |3-Leena Alzahrani |
 |4-Sarah Alghanim  |
 
