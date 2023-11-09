@@ -131,7 +131,10 @@ The graph represents the frequency of cholesterol in the data set. After observi
 
 Scatter plot
 ```{r}
-with(dataset, plot(age,chol, main = "Scatter Plot", xlab = "Age", ylab="chol"))
+library(ggplot2)
+gg <- ggplot(dataset, aes(x=chol, y=trestbps)) + geom_point(aes(col=target, size=oldpeak)) + labs(subtitle="trestbps Vs chol", y="trestbps", x="chol", title="Scatterplot", 
+       caption = "Source: midwest", bins = 30)
+plot(gg)
 ```
 Because high cholesterol is one of the leading causes of heart attacks, we wanted to see if age and cholesterol are correlated, but the scatter plot shows us that the is no correlation between the two attributes.
 
