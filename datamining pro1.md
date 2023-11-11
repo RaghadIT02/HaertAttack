@@ -582,7 +582,7 @@ fviz_nbclust(dataset, kmeans, method = "wss")
 ```
 total within-cluster sum of square tells us that k=4 is the optimal number of clusters since low wss means that the cluster all well seperated from each other.
 ----------------------------------------------------------------------------------------------------------
-Bcubed and silhouette methods show us that  2 means is the best choice for clustering, and total within-cluster sum of square was the only method that told us that 4 means is the best.But in our case,this is not accurate because low WSS is supposed to mean that the clusters don’t really overlap but in our case 4 means shows us that there is a lot of overlapping in the clusters and 2 means gives us the least overlapping to almost no overlapping. so we must discard what  the total within-cluster sum of square is telling us and choose the 2 means as the optimal number of clusters.
+Bcubed and silhouette methods show us that  2 means is the best choice for clustering, and total within-cluster sum of square was the only method that told us that 4 means is the best.But in our case,this is not accurate because low WSS is supposed to mean that the clusters don’t really overlap but in our case 4 means shows us that there is a lot of overlapping (although it has the least wss value) in the clusters and 2 means gives us the least overlapping to almost no overlapping (although it has the most wss value). so we must discard what  the total within-cluster sum of square is telling us and choose the 2 means as the optimal number of clusters.
 
 
 
