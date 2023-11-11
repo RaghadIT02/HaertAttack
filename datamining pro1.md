@@ -82,45 +82,43 @@ Graphs
 --------------
 Boxplot
 ```{r,echo=FALSE}
-install.packages("ggplot")
+install.packages("ggplot2")
 library(ggplot2)
+
 ggplot(data = dataset, aes(x = "", y = trestbps)) +
   geom_boxplot(fill = "lightgreen", color = "black") +
   labs(
     title = "Box Plot for resting blood pressure  ",
     y = "trestbps",
-    x=NULL
-  )+theme_minimal()
-ggplot(data = dataset, aes(x = "", y =chol)) +
-  geom_boxplot(fill = "lightyellow", color = "black") +
-  labs(
-    title = "Box Plot for cholestero",
-    y = "chol",
-    x = NULL 
-  ) +theme_minimal()
+    x = NULL  # Remove x-axis label (since we only have one category)
+  ) +
+  theme_minimal()
+
 ggplot(data = dataset, aes(x = "", y = thalach)) +
   geom_boxplot(fill = "lightpink", color = "black") +
   labs(
     title = "Box Plot for heart rate achieved ",
     y = "heart rate",
-    x = NULL  
-  ) +theme_minimal()
+    x = NULL  # Remove x-axis label (since we only have one category)
+  ) +
+  theme_minimal()
+
 ggplot(data = dataset, aes(x = "", y = oldpeak)) +
   geom_boxplot(fill = "purple", color = "black") +
   labs(
     title = "Box Plot for ST depression",
     y = " ST depressione",
-    x = NULL  
+    x = NULL  # Remove x-axis label (since we only have one category)
   ) +
   theme_minimal()
-ggplot(data = dataset, aes(x = "", y = age)) +
-  geom_boxplot(fill = "lightblue", color = "black") +
+ggplot(data = dataset, aes(x = "", y =chol)) +
+  geom_boxplot(fill = "lightyellow", color = "black") +
   labs(
-    title = "Box Plot for Age",
-    y = "Age",
-    x = NULL  
-  ) + theme_minimal()
-
+    title = "Box Plot for cholestero",
+    y = "chol",
+    x = NULL  # Remove x-axis label (since we only have one category)
+  ) +
+  theme_minimal()
 
 ```
 we can also detect summary of each attribute from the box plot , and we use box plot to detect  the outlier.
@@ -134,7 +132,10 @@ The graph represents the frequency of cholesterol in the data set. After observi
 
 Scatter plot
 ```{r}
-with(dataset, plot(age,chol, main = "Scatter Plot", xlab = "Age", ylab="chol"))
+library(ggplot2)
+gg <- ggplot(dataset, aes(x=chol, y=trestbps)) + geom_point(aes(col=target, size=oldpeak)) + labs(subtitle="trestbps Vs chol", y="trestbps", x="chol", title="Scatterplot", 
+       caption = "Source: midwest", bins = 30)
+plot(gg)
 ```
 Because high cholesterol is one of the leading causes of heart attacks, we wanted to see if age and cholesterol are correlated, but the scatter plot shows us that the is no correlation between the two attributes.
 
@@ -149,7 +150,6 @@ There is no point in using bar plots because  the frequency of one symptom (ex: 
 --------------
 Detecting the outliers:
 ```{r}
- boxplot.stats (dataset$age)$out
   boxplot.stats (dataset$chol)$out
   boxplot.stats (dataset$trestbps)$out
   boxplot.stats (dataset$oldpeak)$out
