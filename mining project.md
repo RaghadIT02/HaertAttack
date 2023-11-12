@@ -1,9 +1,6 @@
 ---
-title: "Untitled"
-date: "2023-11-12"
-output: html_document
+title: "Mining project"
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidymodels)
