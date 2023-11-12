@@ -1,0 +1,484 @@
+---
+date: "2023-11-09"
+output: html_document
+---
+
+we apply chi-square and correlation coefficient to know the attribute that affect our class label in preprocessing ,then started work in classification.
+Classification:  is a supervised learning technique where a model is trained on a labeled dataset, meaning the dataset has already been tagged or classified with the correct class labels. 
+while we try to increase the accuracy, we try different way one of this way  was add  attribute and  remove attribute and we noticed that the following attribute:slope , doesn’t affect accuracy adding them or removing them doesn’t change anything.
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidymodels)
+library(tidyr)
+library(MASS)
+library(rpart)
+library(rpart.plot)
+library(caret)
+```
+
+## import dataset
+
+```{r}
+library(readxl)
+dataset <- read_excel("C:/Users/ragha/OneDrive/سطح المكتب/New folder/Heart Attack Data Set.xlsx")
+```
+
+## data structure
+
+```{r}
+str(dataset)
+```
+
+
+```{r,echo=FALSE}
+dataset$age<-cut(dataset$age, breaks = seq(29, 77, by = 10),right=TRUE)
+```
+Normalization:
+```{r}
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+
+
+dataset$trestbps <- normalize(dataset$trestbps)
+dataset$chol <- normalize(dataset$chol)
+dataset$thalach <- normalize(dataset$thalach)
+dataset$oldpeak <- normalize(dataset$oldpeak)
+dataset$cp <- normalize(dataset$cp)
+dataset$oldpeak <- normalize(dataset$oldpeak)
+dataset$slope <- normalize(dataset$slope)
+dataset$thal <- normalize(dataset$thal)
+```
+
+
+
+## split the data in training and test data (75/25)
+
+```{r}
+set.seed(123)
+data_split <- initial_split(dataset, prop = 0.75)
+train_data <- training(data_split)
+test_data <- testing(data_split)
+```
+
+
+## build decision tree for each partition and measure
+
+```{r}
+tree_1_ig <- rpart(as.factor(target) ~ ., data = train_data, method = "class", parms = list(split = "information"))
+
+tree_1_gini <- rpart(target ~ ., data = train_data, method = "class", parms = list(split = "gini"))
+
+tree_1_gr <- rpart(target ~ ., data = train_data, method = "class", parms = list(split = "anova"))
+```
+
+
+##plot the decision trees for each measure(IG)
+
+```{r}
+rpart.plot(tree_1_ig, main = "Decision Tree for 75/25 Partition using Information Gain")
+```
+
+
+
+## plot the decision trees for each measure(GINI Ratio)
+
+```{r}
+rpart.plot(tree_1_gini, main = "Decision Tree for 75/25 Partition using IG ratio")
+```
+
+
+## plot the decision trees for each measure(GINI index)
+
+```{r}
+rpart.plot(tree_1_gr, main = "Decision Tree for 75/25 Partition using GINI index")
+```
+
+
+This is a decision tree diagram for a 75/25 partition using information gain. It is a graphical representation of a decision-making process, where each node represents a decision and each branch represents a possible outcome.
+
+The tree contains 6 variables with 6 splits. Splits have occurred on the variables ca, Cp, thal, trestbp, and sex.
+
+## predict the target on the test set
+
+```{r}
+#predict the target on the test set
+pred_1_ig <- predict(tree_1_ig, newdata = test_data, type = "class")
+
+pred <- as.factor(pred_1_ig) 
+actual <- as.factor(test_data$target)
+
+confusionMatrix(pred, actual)
+
+#create a confusion matrix
+table(pred_1_ig, test_data$target)
+
+#calculate the overall accuracy
+mean(pred_1_ig ==  test_data$target)
+
+
+#predict the target on the test set
+tree_1_gini <- predict(tree_1_gini, newdata = test_data, type = "class")
+
+#create a confusion matrix
+table(tree_1_gini, test_data$target)
+
+pred <- as.factor(tree_1_gini) 
+actual <- as.factor(test_data$target)
+
+confusionMatrix(pred, actual)
+
+
+
+#calculate the overall accuracy
+mean(tree_1_gini ==  test_data$target)
+
+#predict the target on the test set
+tree_1_gr <- predict(tree_1_gr, newdata = test_data, type = "class")
+
+#create a confusion matrix
+table(tree_1_gr, test_data$target)
+
+pred <- as.factor(tree_1_gr) 
+actual <- as.factor(test_data$target)
+
+confusionMatrix(pred, actual)
+
+
+
+#calculate the overall accuracy
+mean(tree_1_gr ==  test_data$target)
+
+```
+
+the confusion matrix of the IG model showed the accuracy of 76%, th gini ration showed 75%, while the gini index showed 75% accuracy looking at the accuracy level we can that the IG model performed better at classification.
+
+
+## C4.5 algorithm (75/25)
+
+```{r}
+library(RWeka)
+# load the package
+library(RWeka)
+# load data
+# fit model
+tree <- J48(as.factor(target) ~ ., data = train_data)
+# summarize the fit
+summary(tree)
+# make predictions
+predictions <- predict(tree, test_data)
+# summarize accuracy
+table(predictions, test_data$target)
+#calculate the overall accuracy
+mean(predictions ==  test_data$target)
+library(partykit)
+
+
+```
+
+
+## Cart algorithm (75/25)
+
+```{r}
+# load the package
+library(ipred)
+# fit model
+tree <- Bagging (as.factor(target) ~ ., data = train_data)
+summary(tree)
+# make predictions
+predictions <- predict(tree, test_data)
+# summarize accuracy
+table(predictions, test_data$target)
+#calculate the overall accuracy
+mean(predictions ==  test_data$target)
+
+```
+
+
+
+
+## split the data in training and test data (80/20)
+
+
+```{r}
+set.seed(123)
+data_split <- initial_split(dataset, prop = 0.80)
+train_data <- training(data_split)
+test_data <- testing(data_split)
+```
+
+## build decision tree for each partition and measure (ID.3 algorithm)
+
+```{r}
+tree_1_ig <- rpart(target ~ ., data = train_data, method = "class", parms = list(split = "information"))
+
+tree_1_gini <- rpart(target ~ ., data = train_data, method = "class", parms = list(split = "gini"))
+
+tree_1_gr <- rpart(target ~ ., data = train_data, method = "class", parms = list(split = "anova"))
+```
+
+
+## plot the decision trees for each measure(IG)
+
+```{r}
+rpart.plot(tree_1_ig, main = "Decision Tree for 80/20 Partition using Information Gain")
+```
+
+## plot the decision trees for each measure(GINI Ratio)
+
+```{r}
+rpart.plot(tree_1_gini, main = "Decision Tree for 80/20 Partition using Information Gain")
+```
+
+##plot the decision trees for each measure(GINI index)
+
+```{r}
+rpart.plot(tree_1_gr, main = "Decision Tree for 80/20 Partition using Information Gain")
+```
+
+This is a decision tree diagram for a 80/20 partition using information gain. It is a graphical representation of a decision-making process, where each node represents a decision and each branch represents a possible outcome.
+
+The tree contains 6 variables with 6 splits. Splits have occurred on the variables ca, Cp, thal, trestbp, and sex.
+
+
+## predict the target on the test set
+
+
+```{r}
+#predict the species on the test set
+pred_1_ig <- predict(tree_1_ig, newdata = test_data, type = "class")
+
+#create a confusion matrix
+table(pred_1_ig, test_data$target)
+
+pred <- as.factor(pred_1_ig) 
+actual <- as.factor(test_data$target)
+
+confusionMatrix(pred, actual)
+
+#calculate the overall accuracy
+mean(pred_1_ig ==  test_data$target)
+
+
+#predict the species on the test set
+tree_1_gini <- predict(tree_1_gini, newdata = test_data, type = "class")
+
+#create a confusion matrix
+table(tree_1_gini, test_data$target)
+
+pred <- as.factor(tree_1_gini) 
+actual <- as.factor(test_data$target)
+
+confusionMatrix(pred, actual)
+
+#calculate the overall accuracy
+mean(tree_1_gini ==  test_data$target)
+
+#predict the target on the test set
+tree_1_gr <- predict(tree_1_gr, newdata = test_data, type = "class")
+
+#create a confusion matrix
+table(tree_1_gr, test_data$target)
+
+pred <- as.factor(tree_1_gr) 
+actual <- as.factor(test_data$target)
+
+confusionMatrix(pred, actual)
+
+#calculate the overall accuracy
+mean(tree_1_gr ==  test_data$target)
+
+```
+the confusion matrix of the IG model showed the accuracy of 81%, th gini ratio showed 81%, while the gini index showed 81% accuracy looking at the accuracy level we can see that all the measures performed at thesame accuracy level.
+
+
+## C4.5 algorithm (80/20)
+
+```{r}
+library(RWeka)
+# load the package
+library(RWeka)
+# load data
+# fit model
+tree <- J48(as.factor(target) ~ ., data = train_data)
+# summarize the fit
+summary(tree)
+# make predictions
+predictions <- predict(tree, test_data)
+# summarize accuracy
+table(predictions, test_data$target)
+#calculate the overall accuracy
+mean(predictions ==  test_data$target)
+library(partykit)
+
+```
+
+
+## Cart algorithm (80/20)
+
+```{r}
+# load the package
+library(ipred)
+# fit model
+tree <- Bagging (as.factor(target) ~ ., data = train_data)
+summary(tree)
+# make predictions
+predictions <- predict(tree, test_data)
+# summarize accuracy
+table(predictions, test_data$target)
+#calculate the overall accuracy
+mean(predictions ==  test_data$target)
+
+```
+
+
+
+
+## split the data in training and test data (60/40)
+
+
+```{r}
+set.seed(123)
+data_split <- initial_split(dataset, prop = 0.60)
+train_data <- training(data_split)
+test_data <- testing(data_split)
+```
+
+
+## build decision tree for each partition and measure
+
+```{r}
+tree_1_ig <- rpart(target ~ ., data = train_data, method = "class", parms = list(split = "information"))
+
+tree_1_gini <- rpart(target ~ ., data = train_data, method = "class", parms = list(split = "gini"))
+
+tree_1_gr <- rpart(target ~ ., data = train_data, method = "class", parms = list(split = "anova"))
+```
+
+
+##plot the decision trees for each measure(IG)
+
+```{r}
+rpart.plot(tree_1_ig, main = "Decision Tree for 60/40 Partition using Information Gain")
+```
+
+
+
+## plot the decision trees for each measure(GINI Ratio)
+
+```{r}
+rpart.plot(tree_1_gini, main = "Decision Tree for 60/40 Partition using Information Gain")
+```
+
+## plot the decision trees for each measure(GINI index)
+
+```{r}
+rpart.plot(tree_1_gr, main = "Decision Tree for 60/40 Partition using Information Gain")
+```
+
+
+This is a decision tree diagram for a 60/40 partition using information gain. It is a graphical representation of a decision-making process, where each node represents a decision and each branch represents a possible outcome.
+
+The tree contains 6 variables with 6 splits. Splits have occurred on the variables ca, Cp, thal, trestbp, and sex.
+
+## predict the model on the test set
+
+```{r}
+
+#predict the target on the test set
+pred_1_ig <- predict(tree_1_ig, newdata = test_data, type = "class")
+
+#create a confusion matrix
+table(pred_1_ig, test_data$target)
+
+pred <- as.factor(pred_1_ig) 
+actual <- as.factor(test_data$target)
+
+confusionMatrix(pred, actual)
+
+#calculate the overall accuracy
+mean(pred_1_ig ==  test_data$target)
+
+
+#predict the target on the test set
+tree_1_gini <- predict(tree_1_gini, newdata = test_data, type = "class")
+
+#create a confusion matrix
+table(tree_1_gini, test_data$target)
+
+pred <- as.factor(tree_1_gini) 
+actual <- as.factor(test_data$target)
+
+confusionMatrix(pred, actual)
+
+#calculate the overall accuracy
+mean(tree_1_gini ==  test_data$target)
+
+#predict the target on the test set
+tree_1_gr <- predict(tree_1_ig, newdata = test_data, type = "class")
+
+#create a confusion matrix
+table(tree_1_gr, test_data$target)
+pred <- as.factor(tree_1_gr) 
+actual <- as.factor(test_data$target)
+confusionMatrix(pred, actual)
+#calculate the overall accuracy
+mean(tree_1_gr ==  test_data$target)
+
+
+```
+the confusion matrix of the IG model showed the accuracy of 77%, th gini ration showed 76%, while the gini index showed 77% accuracy looking at the accuracy level we can that the IG model and gini index model measure performed better at classification.
+
+
+## C4.5 algorithm (60/40)
+
+```{r}
+library(RWeka)
+# load the package
+library(RWeka)
+# load data
+# fit model
+tree <- J48(as.factor(target) ~ ., data = train_data)
+# summarize the fit
+summary(tree)
+# make predictions
+predictions <- predict(tree, test_data)
+# summarize accuracy
+table(predictions, test_data$target)
+#calculate the overall accuracy
+mean(predictions ==  test_data$target)
+library(partykit)
+plot(tree)
+
+```
+
+
+## Cart algorithm (60/40)
+
+```{r}
+# load the package
+library(ipred)
+# fit model
+tree <- Bagging (as.factor(target) ~ ., data = train_data)
+summary(tree)
+# make predictions
+predictions <- predict(tree, test_data)
+# summarize accuracy
+table(predictions, test_data$target)
+#calculate the overall accuracy
+mean(predictions ==  test_data$target)
+
+```
+
+
+------------------
+discusion:
+------------------
+from the study we observe that the split 60/40 performed better because the misclassification error is lower and the accuracy value is higer than others.
+The decision tree It is a graphical representation of a decision-making process, where each node represents a decision and each branch represents a possible outcome.
+The tree contains 6 variables with 6 splits. Splits have occurred on the variables ca, Cp, thal, trestbp, and sex. this are the most important best features.
+the c4.5 algorithm gives a high better accuracy, by looking at the confusion matrix and calculating the accuracy of the classification.
