@@ -23,9 +23,9 @@ Clustering: We will create a set of clusters for people who have similar symptom
 
 We believe that by using these data mining tasks, we can build a model that can accurately predict the people target to have heart attack.
 
-
+-------------------------------------------------------------
 #modification on the pre processing done by Raghad and Taif.
-
+-------------------------------------------------------------
 
 
 The dataset was sourced from the kaggle website in this URL: <https://www.kaggle.com/datasets/pritsheta/heart-attack>
