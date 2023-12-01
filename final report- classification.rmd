@@ -213,11 +213,6 @@ In this scatter plot, we can observe a pattern or trend, indicating that there m
 The range of 'trestbps' values is from 100 to 175, while the range of 'chol' values is from 230 to 320. This indicates that there are both positive and negative relationships between these two variables.
 
 
-------------
-Bar plot
-------------
- There is no point in using bar plots because the frequency of one symptom (ex: high blood pressure alone ) is not enough to decide whether the patients are likely to have a heart attack or not
-
 --------------
  outliers:
 --------------
@@ -286,11 +281,6 @@ dataset$thal <- normalize(dataset$thal)
 In order to ensure comparability across individuals and eliminate biases resulting from differences in measurement units or scales, we have decided to normalize the following attributes: trestbps, chol, thalach, oldpeak, cp, oldpeak, slope,and thal.
 
 
-------------------------------------
-feature selection
-------------------------------------
-we did not applly feature selection beacause the number of attribute is small and we will  neeed them
-------------------------------------
 • Correlation Analysis:
 We will find the correlation between each attribute and the class label (target). For the nominal data we will use chi-square and for the numeric data we will use correlation coefficient. This will help us to determine the most important and correlated attributes to the target.
 ```{r}
