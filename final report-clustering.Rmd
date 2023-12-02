@@ -512,6 +512,9 @@ For K=4: The average silhouette width was 0.12, which shows us that the objects 
 
 In conclusuin, Bcubed and silhouette methods show us that  2 means is the best choice for clustering, and total within-cluster sum of square was the only method that told us that 4 means is the best.But in our case,this is not accurate because low WSS is supposed to mean that the clusters don’t really overlap but in our case 4 means shows us that there is a lot of overlapping (although it has the least wss value) in the clusters and 2 means gives us the least overlapping to almost no overlapping (although it has the most wss value). so we must discard what  the total within-cluster sum of square is telling us and choose the 2 means as the optimal number of clusters.
 
+So,We finally decided that k=2 is the the optimal number of clusters since we were able to see two clear categories for our data because the clusters were seperated well (with little to no overlaps) since k=2 had the highest silhouette width. we must mention the fairly high precision and recall (0.70 and 0.72) which tells us the the model is able to accurately put the data in their correct groups.
+
+
 
 |:-------------------------------------------------|
 | **Evaluation and Comparison in classification:** |
