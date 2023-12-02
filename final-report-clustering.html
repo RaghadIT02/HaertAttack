@@ -362,7 +362,7 @@ display: none;
 <pre><code>## package &#39;readxl&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\ragha\AppData\Local\Temp\Rtmp69RkLK\downloaded_packages</code></pre>
+##  C:\Users\ragha\AppData\Local\Temp\RtmpCIO8r7\downloaded_packages</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -1421,6 +1421,12 @@ is not true in our case.</td>
 <td>0.51</td>
 <td>0.36</td>
 </tr>
+<tr class="odd">
+<td>visualization</td>
+<td>clusters pics in the above</td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <table>
@@ -1665,24 +1671,27 @@ instances (targeted to heart attack). Lastly, the precision was (85.7 %)
 indicating the true positive instances over all that instances the model
 predicted as positive.</p>
 <p>The decision tree had 7 pathes from the root to the leaves so, we
-will have 7 rules. Rules: 1- if number of major vessels (cp) &lt;1 and
-(ca) &gt;= 1 then not target to have heart attack (target= 0) . 2- if
-number of major vessels (cp) &lt; 1 and(ca) &lt; 1 and (thal) &gt; = 3
-and ( oldpeak ) &gt;= 0.65 then not target to have heart attack(target=
-0) .</p>
-<p>3- if number of major vessels (cp) &lt; 1 and (ca) &lt; 1 and (thal
-)&lt; 3 and ( oldpeak ) &lt; 0.65 then target to have heart
+will have 7 rules. Rules: 1- if number of major vessels (cp) &lt;0.17
+and (ca) &gt;= 1 then not target to have heart attack (target= 0) . 2-
+if number of major vessels (cp) &lt; 0.17 and(ca) &lt; 1 and (thal) &gt;
+= 0.83 and ( oldpeak ) &gt;= 0.83 then not target to have heart
+attack(target= 0) .</p>
+<p>3- if number of major vessels (cp) &lt; 0.17 and (ca) &lt; 1 and
+(thal )&lt; 0.83 and ( oldpeak ) &lt; 0.84 then target to have heart
 attack(target= 1 ).</p>
-<p>4- if number of major vessels (cp) &lt; 1 and (ca) &lt; 1 and (thal
-)&gt;= 3 then target to have heart attack(target= 1 ).</p>
-<p>5- if number of major vessels (cp ) &gt; =1 and (thal )&gt;= 3 and
-(thalach) &lt;143 then not target to have heart attack (target= 0) .</p>
-<p>6- if number of major vessels (cp ) &gt; =1 and (thal )&gt;= 3 and
-(thalach) &gt;= 143 then target to have heart attack (target= 1) .</p>
-<p>7- if number of major vessels (cp ) &gt; =1 and (thal )&lt; 3 then
-target to have heart attack (target= 1) .</p>
+<p>4- if number of major vessels (cp) &lt; 0.17 and (thalach) &lt; 0.48
+and (thal )&gt;= 0.83 then not target to have heart attack(target=
+0).</p>
+<p>5- if number of major vessels (cp) &lt; 0.17 and (thalach) &lt; 0.48
+and (thal )&lt; 0.83 then target to have heart attack(target= 1).</p>
+<p>6-if number of major vessels (cp) &lt; 0.17 and (thalach) &gt;= 0.48
+and (oldpeak )&gt;= 0.49 then not target to have heart attack(target=
+0).</p>
+<p>7- if number of major vessels (cp) &lt; 0.17 and (thalach) &gt;= 0.48
+and (oldpeak )&lt; 0.49 then target to have heart attack(target= 1
+).</p>
 <p>The decision tree illustrates that 5 attributes were used in
-predicting the class label which are ( cp ,cab,thal ,thalach and oldpeak
+predicting the class label which are ( cp ,ca ,thal ,thalach and oldpeak
 ) where the other attributes had no effect in the class label
 prediction.</p>
 </div>
