@@ -1,0 +1,651 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-12-02"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+options(repos = c(CRAN = "https://cran.rstudio.com"))
+```
+
+```{r}
+install.packages("readxl")
+```
+
+ 
+| Name           | ID         |
+|----------------|------------|
+| Taif alrubeaan |  442202301 |
+| Raghad Alboqami|  442200455 |
+| Leena Alzahrani|  443200847 |
+| Sarah Alghanim |  442201747 |
+  
+  
+
+-----------------------------------
+The goal of collecting this dataset:
+-----------------------------------
+our goal is to Identify whether the chances of of a heart attack occurrence is high or low for the patient
+
+-----------------------------------
+#classification and clustering goal:
+------------------------------------
+
+Classification: We will classify target people into different groups based on appearance of muilty symptoms of Heart attack disease .This will allow us to predict the people who target to have heart attack based on certain factors .
+
+Clustering: We will create a set of clusters for people who have similar symptoms. This will allow us to identify groups of people who are have the similar symptoms and target to have heart attack .
+
+We believe that by using these data mining tasks, we can build a model that can accurately predict the people target to have heart attack.
+---------
+1 Problem
+---------
+Recently, Cardiovascular diseases rate has been increased, which leads death globally. Early detection of the symptoms is important to prevent the disease from fully developing and reduce premature mortality. In our project, we will study and analyze patients’ data that will help us well in identifying symptoms that you don't recognize as a sign of a heart disease and help many people to take precautions by predicting the possibility of having a Heart attack.
+
+------------------
+2 Data Mining Task
+------------------
+ In our project we will use two data mining tasks to help us predict the possibility of having cardiovascular diseases which are classification and clustering. For classification we will train our model to be able to classify if the patient has cardiovascular diseases or not using (target) class based on a set of medical examinations like blood pressure, serum cholesterol , ST depression, etc. For the clustering our model will create a set of clusters for the patient who have similar characteristics, then these clusters will be used to predict new patients’ results.
+ 
+
+
+3 Data 
+The source :
+ https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k
+Number of objects: 303
+ Number of attributes: 14
+----------------------------
+ Attribute characteristics:
+---------------------------
+| Attribute Name | Data Type | Description                                            | Possible Values     |                                                      
+|----------------|-----------|--------------------------------------------------------|---------------------|
+| age            | Numeric   | Age (in years)                                          | Range between 29-77 |                                                      |                |           |                                                        |                     |
+| sex            | Binary    | Gender                                                  | 1 = Male; 0 = Female |                                                     |               |           |                                                          |                     |                       
+| cp             | Numeric   | Chest Pain Type                                         | 1: Typical Angina, 2: Atypical Angina, 3: Non-Anginal Pain, 4: Asymptomatic |  |           |                                                        |                            | 
+| trestbps       | Numeric   | Resting Blood Pressure                                  | Range between 94-200 |                                                     |                  |        |                                                           |                      |
+| chol           | Numeric   | Serum Cholesterol in mg/dL                              | Range between 126-564                                                   
+| fbs            | Binary    | Fasting Blood Sugar > 120 mg/dL (likely to be diabetic)  | 1 = True, 0 = False                                                       |                |         |                                                           |                         | 
+| Restecg        | Binary    | Resting Electrocardiogram                               | 0 = Normal, 1 = Abnormal                                                  |                 |          |                                                          |                           |
+| Oldpeak        | Numeric   | ST Depression                                           | Range between 0-6.20                                                      |                |           |                                                          |                             |
+| thalach        | Numeric   | Heart Rate Achieved                                     | Range between 71-202  |                                                    |               |           |                                                         |                        |
+| exang          | Binary    | Exercise Induced Angina                                 | 1 = Yes; 0 = No                                                           |                |          |                                                          |                       |
+| slope          | Numeric   | The Slope of the Peak Exercise ST Segment               | Range between 0-2                                                         |                  |       |                                                             |                    |
+| Ca             | Numeric   | Number of Major Vessels                                 | Range between 0-4                                                         |                |           |                                                         |                        |
+| Thal           | Numeric   | Thalassemia                                             | Range between 0-3                                                         |                |          |                                                           |                        |
+| Target         | Binary    | If the Target Has Disease or Not                        | 0 = No Disease, 1 = Disease|                                               
+
+
+Class label:
+-target of Heart Attack accurrance 
+-not target of Heart Attack accurrance
+                                                                                                                                                                                                       
+
+## view dataset:
+
+```{r}
+#install.packages("readxl")
+library(readxl)
+dataset <- read_excel("C:/Users/ragha/OneDrive/سطح المكتب/New folder/Heart Attack Data Set.xlsx")
+View(dataset)
+```
+
+
+ Summary of dataset: 
+
+```{r}
+nrow(dataset) 
+ncol(dataset) 
+```
+
+```{r}
+summary(dataset$age)
+summary(dataset$cp)
+summary(dataset$trestbps)
+summary(dataset$chol)
+summary(dataset$oldpeak)
+summary(dataset$thalach)
+summary(dataset$slope)
+summary(dataset$ca)
+summary(dataset$thal)
+```
+
+## The summary function provides information such as the minimum, 1st quartile, median, mean, 3rd quartile, and maximum values for each variable. It also includes the number of missing values for the thal variable.
+
+## Missing values and Null values
+
+```{r}
+ is.na(dataset)
+sum(is.na(dataset))
+
+```
+
+The output is false and 0 this indicates that the element in our dataset
+is not missing
+
+| Graphs                                                                                                                                                                                                                                                |
+|:---------------|
+| Boxplot                                                                                                                                                                                                                                               |
+| we can also detect summary of each attribute from the box plot , and we use box plot to detect the outlier.                                                                                                                                           |
+| Histogram                                                                                                                                                                                                                                             |
+| Scatter plot                                                                                                                                                                                                                                          |
+| In this scatter plot, we can observe a pattern or trend, indicating that there might be a correlation between 'trestbps' and 'chol'. This could potentially mean that changes in one variable might be associated with changes in the other variable. |
+| The range of 'trestbps' values is from 100 to 175, while the range of 'chol' values is from 230 to 320. This indicates that there are both positive and negative relationships between these two variables.                                           |
+                                          
+
+## outliers:
+
+Detecting the outliers:
+
+```{r}
+  boxplot.stats (dataset$chol)$out
+  boxplot.stats (dataset$trestbps)$out
+  boxplot.stats (dataset$oldpeak)$out
+  boxplot.stats (dataset$thalach)$out
+```
+
+Removing the outliers:
+
+```{r}
+outliers <- boxplot (dataset$chol, plot=FALSE) $out
+ dataset <- dataset [-which(dataset$chol %in% outliers),]
+ boxplot.stats (dataset$chol) $out
+ 
+```
+
+The outlier in the attribute wasn't a real Outlier because it's contain
+useful information about the dataset and the behavior of the system
+being studied. and if we remove all the Outliers, our dataset affected
+and become small so we remove the Outlier from the attribute control
+that we noticed it is real Outlier. One of the steps to get a good
+cluster is to remove outliers, in our case we only needed to remove one
+outlier because it impacted the clusters, the other values did not, so
+we kept them since clearly they were not true outliers,and since they
+are useful for the clusters because we need more data.
+-------------------------------- Transformation and Normalization
+-------------------------------- Discretization: We did not need this
+step when performing clustring --------------------------------
+Normalization:
+
+```{r}
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+
+dataset$trestbps <- normalize(dataset$trestbps)
+dataset$chol <- normalize(dataset$chol)
+dataset$thalach <- normalize(dataset$thalach)
+dataset$oldpeak <- normalize(dataset$oldpeak)
+dataset$cp <- normalize(dataset$cp)
+dataset$oldpeak <- normalize(dataset$oldpeak)
+dataset$slope <- normalize(dataset$slope)
+
+
+```
+
+
+## print the final preprocessed dataset
+
+```{r}
+print(dataset)
+
+```
+                                                                                       
+---------------------------------------
+| #clustering :
+Clustering is an unsupervised learning method and it is the process of arranging a set of objects so that the objects that are in the same cluster are more comparable to those in other clusters. There will not be a class label since clustering is an unsupervised learning method. we are going to partition our data using k-means by trying three different k-means values ( 2,3 and 4 means clusters). In all three trials, we will calculate the average silhouette ,total within-cluster sum of square and the BCubed precision and recall. |
+| ##About packages and methods: We used K-means methods to form the clusters. For plots, we used fviz_cluster. For evaluation, we used fviz_silhouette and fviz_nbclust to calculate the silhouette value and cluster,factoextra,NbClust and for visualizing dendrogram we use fviz_dend. We also used a method to calculate Bcubes percision and recall.                                                                                                                                                                                                       
+
+Optimal number of clusters:
+
+```{r}
+# Install packages if they are not already installed
+if (!require("factoextra")) install.packages("factoextra")
+if (!require("cluster")) install.packages("cluster")
+if (!require("NbClust")) install.packages("NbClust")
+
+# Load necessary libraries
+library(factoextra)
+library(cluster)
+library(NbClust)
+
+
+oldDataset<-dataset
+dataset=dataset[,-14]
+
+fviz_nbclust(dataset, kmeans, method = "silhouette")+labs(subtitle ="Silhouette method")
+
+fviz_nbclust(dataset, kmeans, method = "wss")
+
+```
+
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| After conducting k-means clustering on the dataset and evaluating different numbers of clusters, we determined that two clusters are optimal. This decision was supported by silhouette analysis, which measures how similar an object is to its own cluster compared to other clusters. The silhouette method showed us that a two-cluster solution had the highest average silhouette width, indicating a more separated cluster compared to other k sizes. Also, the elbow method, which examines the within-cluster sum of squares, confirm this finding by showing a clear 'elbow' at two clusters, suggesting that increasing the number of clusters beyond this point would cause overlapping clusters so we chose k=2 and 2 numbers nears to it. |
+
+k-means clustring k=2:
+
+```{r}
+set.seed(8953)
+dataset=scale(dataset)
+kmeans.result <- kmeans(dataset, 2)
+# print the clusterng result
+kmeans.result
+```
+
+visualize clustering:
+
+```{r}
+#install.packages("factoextra")
+library(factoextra)
+fviz_cluster(kmeans.result, data = dataset)
+```
+
+K=2: As we can see from the image, there are two clusters with very
+little to almost no overlapping. And the data is put into two
+categories, which is what we want knowing the ground truth.
+
+Total within-cluster-sum of square:
+
+```{r}
+kmeans.result$tot.withinss
+```
+
+| k=2: The value of the total sum of square indicate that the larger value (2008.083) means the larger seperation so,the object in the second cluster (with 195 objects) are more separated than the object in the first cluster (with 103 objects) that has the value of 1256.225. |
+|------------------------------------------------------------------------|
+| BCubed precision and recall:                                                                                                                                                                                                                                                      |
+
+## k=2 model gives us the highest quality of clusters since we were able to reach the precision of 0.70 and recall of 0.72 which is considered high. 0.70 precision indicates that our cluster is leaning towards purity and most of the objects in the same cluster truly belong to The same category (target/ not target of heart attack). 0.72 recall tells us that our data is accurately clustered meaning that a lot of the objects that are from the same category are assign to the same cluster.
+
+k-means clustring k=3:
+
+```{r}
+set.seed(8953)
+dataset=scale(dataset)
+kmeans.result <- kmeans(dataset, 3)
+# print the clusterng result
+kmeans.result
+```
+
+visualize clustering
+
+```{r}
+#install.packages("factoextra")
+library(factoextra)
+fviz_cluster(kmeans.result, data = dataset)
+```
+
+K=3: as we can see from the image, there are 3 clusters, which means our
+data has been put into 3 categories, there is a lot overlapping so the
+clusters aren't very clear.
+
+Total within-cluster-sum of square:
+
+```{r}
+kmeans.result$tot.withinss
+```
+
+| k=3: the first cluster contains 111 objects with total sum of square 1347.758. Second cluster contains 108 objects with total sum of square 965.2325. The third cluster contains 84 objects which is the smallest with total sum of square 920.4728. The value of the total sum of square tells us that the bigger value means the bigger separation so,the objects in the third cluster are more separated than the objects in the other clusters and the large amount of objects might have impacted this value since the wss is impacted by the number of observations .The least wss was for the fist cluster which indicates that the objects are more compact in it. |
+|---------------------------------------|
+| BCubed precision and recall:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+
+## k=3 model gives us the precision of 0.63 and recall of 0.51. 0.63 precision indicates that our cluster is not very pure although a lot of the objects in the same cluster truly belong to The same category (target/ not target of heart attack) also The value is not very far from k = 2,but its not enough to say that its mostly pure. 0.51 recall tells us that only about half of our data is accurately clustered meaning that about half of the objects that are from the same category are assigned to the same cluster, which is not very good.
+
+k-means clustring k=4:
+
+```{r}
+set.seed(8953)
+dataset=scale(dataset)
+kmeans.result <- kmeans(dataset, 4)
+# print the clusterng result
+kmeans.result
+```
+
+visualize clustering
+
+```{r}
+#install.packages("factoextra")
+library(factoextra)
+fviz_cluster(kmeans.result, data = dataset)
+```
+
+K=4: as we can see from the image, there are 4 clusters that aren't very
+good since there is a lot of overlapping, so we cant identify the 4
+categories clearly and come up with a good conclusion regarding them
+
+Total within-cluster-sum of square:
+
+```{r}
+kmeans.result$tot.withinss
+```
+
+| k=4: the first cluster contains 42 objects with total sum of square 524.1004. Second cluster contains 80 objects with total sum of square 840.5818. The third cluster contains 69 objects with total sum of square 549.9314 The fourth cluster contains 107 objects with total sum of square 893.7696. The value of the total sum of square indicate that the larger value means the larger separation so,the object in the fourth cluster are more separated than the objects in the other clusters .The least wss was for the first cluster that indicates that the objects are more compact in it. |
+|------------------------------------------------------------------------|
+| BCubed precision and recall:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+
+## k=4 model gives us the lowest quality of clusters since we were only able to reach the precision of 0.67 and recall of 0.36. 0.67 precision indicates that our cluster is not very pure although a lot of the objects in the same cluster truly belong to The same category (target/ not target of heart attack),but its not enough to say that its mostly pure. 0.36 recall tells us that our data is not accurately clustered meaning that most of the objects that are from the same category are not assigned to the same cluster, and that is not good..
+
+Hierarchical Clustering:
+
+```{r}
+set.seed(2835)
+# draw a sample of 40 records from the USArrests data, so that the clustering plot will not be over crowded
+idx <- sample(1:dim(dataset)[1], 50)
+dataset2 <- dataset[idx, ]
+## hiercrchical clustering
+library(factoextra) 
+hc.cut <- hcut(dataset2, k = 2, hc_method = "complete") # Computes Hierarchical Clustering and Cut the Tree
+
+
+# Visualize dendrogram
+fviz_dend(hc.cut,rect = TRUE)  #logical value specifying whether to add a rectangle around groups.
+# Visualize cluster
+fviz_cluster(hc.cut, ellipse.type = "convex")
+
+
+
+set.seed(2835)
+# draw a sample of 40 records from the USArrests data, so that the clustering plot will not be over crowded
+idx <- sample(1:dim(dataset)[1], 50)
+dataset2 <- dataset[idx, ]
+## hiercrchical clustering
+library(factoextra) 
+hc.cut <- hcut(dataset2, k = 3, hc_method = "complete") # Computes Hierarchical Clustering and Cut the Tree
+
+
+# Visualize dendrogram
+fviz_dend(hc.cut,rect = TRUE)  #logical value specifying whether to add a rectangle around groups.
+# Visualize cluster
+fviz_cluster(hc.cut, ellipse.type = "convex")
+
+
+
+
+set.seed(2835)
+# draw a sample of 40 records from the USArrests data, so that the clustering plot will not be over crowded
+idx <- sample(1:dim(dataset)[1], 50)
+dataset2 <- dataset[idx, ]
+## hiercrchical clustering
+library(factoextra) 
+hc.cut <- hcut(dataset2, k = 4, hc_method = "complete") # Computes Hierarchical Clustering and Cut the Tree
+
+
+# Visualize dendrogram
+fviz_dend(hc.cut,rect = TRUE)  #logical value specifying whether to add a rectangle around groups.
+# Visualize cluster
+fviz_cluster(hc.cut, ellipse.type = "convex")
+
+
+```
+
+## We used hierarchical clustering to see if we can get better cluster results that k-means, but since k-means gave us the least overlapping, we were able to understand or data better. We decided to use k means method instead of hierarchical since k means showed us clearer clusters.
+
+Validation using average silhouette for each clusters:
+
+```{r}
+
+
+# Set seed for reproducibility
+set.seed(123)
+
+
+dataset <- dataset[,-14]
+
+# Scale the dataset (this should be done outside the loop, only once)
+dataset <- scale(dataset)
+
+# Prepare a vector to hold average silhouette widths for each k (k from 2 to 4)
+avg_sil_widths <- numeric(3)
+
+# Loop over k from 2 to 4
+for (k in 2:4) {
+  # Run the k-means algorithm on the dataset
+  kmeans.result <- kmeans(dataset, centers = k, nstart = 25)
+  # Calculate silhouette widths for each point
+  sil_widths <- silhouette(kmeans.result$cluster, dist(dataset))
+  # Calculate the average silhouette width
+  avg_sil_widths[k-1] <- mean(sil_widths[, "sil_width"]) # corrected index k-1
+}
+
+# Print the average silhouette widths for each k
+avg_sil_widths
+
+# Function to compute average silhouette width
+silhouette_score <- function(k){ 
+  km <- kmeans(dataset, centers = k, nstart = 25)
+  ss <- silhouette(km$cluster, dist(dataset))
+  sil <- mean(ss[, 3])
+  return(sil)
+}
+
+# Use silhouette method to determine the optimal number of clusters
+fviz_nbclust(dataset, kmeans, method = "silhouette") +
+  labs(subtitle = "Silhouette method")
+
+# Initialize wss for k values from 2 to 10, so it should have 9 elements
+wss <- numeric(9) # Corrected to 9 to match the loop below
+
+# Loop over k from 2 to 10
+for (k in 2:10) {
+  # Run the k-means algorithm on the dataset with k clusters
+  kmeans.result <- kmeans(dataset, centers = k, nstart = 25)
+  # Store the total within-cluster sum of squares in the wss vector
+  wss[k-1] <- kmeans.result$tot.withinss # Corrected index k-1
+}
+
+# You can now plot the WSS (Elbow method) or print the WSS values
+# plot(2:10, wss, type = "b", xlab = "Number of Clusters", ylab = "Within-cluster sum of squares",
+#     main = "Elbow Method for Optimal Number of Clusters")
+
+
+```
+
+#silhouette width
+
+For Clustering, we used K-means algorithm with 3 different values for K
+to find the optimal number of clusters. We calculated the average
+silhouette width for each K, and found the following outcomes: • Number
+of cluster(K)= 2, the average silhouette width=0.16 • Number of
+cluster(K)= 3, the average silhouette width=0.11 • Number of cluster(K)=
+4, the average silhouette width=0.12 The model that has the optimal
+number of clusters is 2-Mean because it has the best average silhouette
+width and that means the objects that are in the same cluster are closer
+to each other and distanced from the objects in the other cluster.3 and
+4- means don't have the highest silhouette width values, which tells us
+that objects that are in the same cluster are farther from each other
+and less distanced from the objects in the other clusters.
+---------------------------------------------------------------------------------------------------------
+total within-cluster sum of square(graph)
+
+```{r}
+fviz_nbclust(dataset, kmeans, method = "wss")
+```
+
+#total within-cluster sum of square total within-cluster sum of square
+tells us that k=4 is the optimal number of clusters since low wss means
+that the cluster all well seperated from each other.
+
+total within-cluster sum of square tells us that k=4 is the optimal
+number of clusters since lowest wss (2808.383) means that the cluster
+all well separated from each other and has the smallest distance between
+points and centroid.which is not true in our case.. total within-cluster
+sum of square tells us that k=3 is the not the optimal number of
+clusters since it has a meduim wss(3233.463) value which tells us that
+the clusters might not be well separated from each other but at the same
+time, there isn't so much overlapping.. total within-cluster sum of
+square tells us that k=2 is the worst number of clusters since it has
+the highest wss (3264.308) which means that the clusters are likely
+overlapping a lot and on top of each other.And that is not true in our
+case.
+
+| #Findings
+
+---------------------
+ Evaluation and Comparison in clustering:
+---------------------
+
+
+|                                     | K = 2     | K = 3     | K = 4     |
+|-------------------------------------|-----------|-----------|-----------|
+| Average Silhouette width            | 0.16      | 0.11      | 0.12      |
+| total within-cluster sum of squares | 3264.308  | 3233.463  | 2808.383  |
+| BCubed precision                    | 0.70      | 0.63      | 0.67      |
+| BCubed recall                       | 0.72      | 0.51      | 0.36      |
+
+
+--------------------------
+Finding in clustring:
+--------------------------
+
+For K=2 : The average silhouette width was 0.16, which shows us that the objects in a cluster were grouped together closely and less overlapping. Precision was 0.70 and recall was 0.72.This shows us a good capability to accurately capture instances within clusters and recognize relevant points. However, The total within-cluster sum of squares is 3417.422, which tells us that the points are far from  the centroid. large distance tells us that the points are farther away from the centroid, which is not wanted for a good cluster.
+
+For K=3: The average silhouette width was 0.11, which shows us that the objects in a cluster were not really grouped together closely and there is likely more overlapping. Precision was 0.63 and recall was 0.51.This shows us a lesser  capability to accurately capture instances within clusters and recognize relevant points.The total within-cluster sum of squares is 3201.26, which tells us that the points are also farther from  the centroid. large distance tells us that the points are farther away from the centroid, which is not wanted for a good cluster.
+
+For K=4: The average silhouette width was 0.12, which shows us that the objects in a cluster were not really grouped together closely and there is likely more overlapping. Precision was 0.67 and recall was 0.36.This shows us a lesser  capability to accurately capture instances within clusters and recognize relevant points. However, The total within-cluster sum of squares is 2996.77, which tells us that the points are closer to  the centroid. The closer the points in a cluster are to the centroid, the better. A small distance tells us that the points are closer to the centroid, which is wanted for a good cluster.
+
+
+In conclusuin, Bcubed and silhouette methods show us that  2 means is the best choice for clustering, and total within-cluster sum of square was the only method that told us that 4 means is the best.But in our case,this is not accurate because low WSS is supposed to mean that the clusters don’t really overlap but in our case 4 means shows us that there is a lot of overlapping (although it has the least wss value) in the clusters and 2 means gives us the least overlapping to almost no overlapping (although it has the most wss value). so we must discard what  the total within-cluster sum of square is telling us and choose the 2 means as the optimal number of clusters.
+
+
+|:-------------------------------------------------|
+| **Evaluation and Comparison in classification:** |
+
+We applied several methods to evaluate classification models which are:
+accuracy, sensitivity , specificity, and precision. Accuracy means the
+ability of the model to classify the data correctly. It's used to
+evaluate the performance of the model based on the test data.
+Sensitivity means the ability of the model to correctly identify
+positive tuples. Specificity is the opposite of the sensitivity. It
+means the ability of the model to correctly identify negative tuples.
+Finally, precision means the proportion of correctly predicted positive
+tuples out of all tuples predictive as positive.
+
+Information Gain: It measures the amount of information provided by a
+feature, information gain is used to determine the best feature which
+has the highest value to split the data at each node of the tree.
+
+Gini index: It is a measurement used in classifying the data and
+building decision trees, it is used to determine the splitting
+attribute. The gini index measure the impurity of the data and the
+attribute with the lowest gini index value will have the highest
+reduction impurity and will be chosen as the split attribute.
+
+Gain ratio: It is a measure used in decision tree algorithms to select
+the best feature that has the highest value for splitting data. It takes
+into consideration both the information gain and the split information
+of a feature.
+
+**75% Training, 25% Testing :**
+
+|                 | IG    | IG Ratio | Gini Index |
+|-----------------|-------|----------|------------|
+| **Accuracy**    | 80%   | 84.5%    | 84.5%      |
+| **Precision**   | 81.4% | 85.7%    | 85.7%      |
+| **Sensitivity** | 70.9% | 77.4%    | 77.4%      |
+| **Specificity** | 87.5% | 90%      | 90%        |
+
+**80% Training, 20% Testing :**
+
+|                 | IG    | IG Ratio | Gini Index |
+|-----------------|-------|----------|------------|
+| **Accuracy**    | 77%   | 75.4%    | 75.4%      |
+| **Precision**   | 80.9% | 80%      | 80%        |
+| **Sensitivity** | 65%   | 61.5%    | 61.5%      |
+| **Specificity** | 87%   | 87%      | 87%        |
+
+**60% Training, 40% Testing :**
+
+|                 | IG    | IG Ratio | Gini Index |
+|-----------------|-------|----------|------------|
+| **Accuracy**    | 73.6% | 73.6%    | 73.6%      |
+| **Precision**   | 74%   | 74%      | 74%        |
+| **Sensitivity** | 68.5% | 68.5%    | 68.5%      |
+| **Specificity** | 78.3% | 78.3%    | 78.3%      |
+
+## **Summary for 75% training set and 25% testing set:**
+
+The best algorithm based on accuracy, precision, sensitivity, and
+specificity is Gini index and Information Gain Ratio (IG ratio) with an
+accuracy of 84.5%
+
+## **Summary for 80% training set and 20% testing set:**
+
+The best algorithm based on accuracy, precision, sensitivity, and
+specificity is Information Gain (IG) with an accuracy of 77%
+
+## **Summary for 60% training set and 40% testing set:**
+
+All algorithms perform equally with an accuracy of 73.6%.
+
+| **Conclusion:**                                                                                                                                                                                                                            |
+|:-----------------------------------------------|
+| we noticed that gini ratio and gini index algorithms ine ach partition have the same accuracy .And the highest partition accuracy is 75/25 since has the highest accuracy in both algorithm gini ratio and gini index with value=84.5%.    |
+| we noticed in the last partition 60/40 all algorithms have the same accuracy.                                                                                                                                                              |
+| The best-performing algorithm overall is both Information Gain Ratio (IG ratio) and Gini index because they have an average of accuracy 79.33%. they consistently performs well across different partitions based on the provided metrics. |
+
+## **Finding in classification:**
+
+In classification, We perform multiple decision trees using different
+partitioning splits and different attribute selection method we chose
+that had the best accuracy which is partitioning data into 75% training
+and 25% testing with Gini index and Gain ratio attribute selection. It
+had the highest accuracy (84.5 %) indicating that the model had the best
+performance in predicting the correct class labels(targeted or not
+targeted to heart attack ). In the other hand, the error rate was low
+(15.4%) since it equals (1-accuracy) and it shows the percent of
+incorrect predictions. For sensitivity it was (77.4%) which is high and
+tells that the model can well predict the positive instances (targeted
+to heart attack) and for specificity it was (90%) which is higher than
+the sensitivity and it tells how the model can predict the positive
+instances (targeted to heart attack). Lastly, the precision was (85.7 %)
+indicating the true positive instances over all that instances the model
+predicted as positive.
+
+The decision tree had 7 pathes from the root to the leaves so, we will
+have 7 rules. Rules: 1- if number of major vessels (cp) \<1 and (ca) \>=
+1 then not target to have heart attack (target= 0) . 2- if number of
+major vessels (cp) \< 1 and(ca) \< 1 and (thal) \> = 3 and ( oldpeak )
+\>= 0.65 then not target to have heart attack(target= 0) .
+
+3- if number of major vessels (cp) \< 1 and (ca) \< 1 and (thal )\< 3
+and ( oldpeak ) \< 0.65 then target to have heart attack(target= 1 ).
+
+4- if number of major vessels (cp) \< 1 and (ca) \< 1 and (thal )\>= 3
+then target to have heart attack(target= 1 ).
+
+5- if number of major vessels (cp ) \> =1 and (thal )\>= 3 and (thalach)
+\<143 then not target to have heart attack (target= 0) .
+
+6- if number of major vessels (cp ) \> =1 and (thal )\>= 3 and (thalach)
+\>= 143 then target to have heart attack (target= 1) .
+
+7- if number of major vessels (cp ) \> =1 and (thal )\< 3 then target to
+have heart attack (target= 1) .
+
+The decision tree illustrates that 5 attributes were used in predicting
+the class label which are ( cp ,cab,thal ,thalach and oldpeak ) where
+the other attributes had no effect in the class label prediction.
+
+## Both approaches (Classification and Clustering)were helpful for building models for our data set that can help in reaching our goal which is detecting people from heart attacks, but since our data set includes class label which is target, classification was considered the best option to predict the possibilities of having heart attack based on the attributes also the model had great accuracy.
+
+
+
+| Refrences: |
+
+[1]"rstudio - ggplot2 library installation in R Studio," Stack Overflow.
+<https://stackoverflow.com/questions/36582347/ggplot2-library-installation-in-r-studio>.
+[2]"boxplot function - RDocumentation," www.rdocumentation.org.
+<https://www.rdocumentation.org/packages/graphics/versions/3.6.2/topics/boxplot>.
+[3]"R Documentation and manuals \| R Documentation," Rdocumentation.org,
+2019. <https://www.rdocumentation.org/>. [4]StatQuest with Josh Starmer,
+"StatQuest: K-means clustering," YouTube, 23 05‏, 2018. [Video].
+Available: <https://youtu.be/4b5d3muPQmA>. [Accessed: 11, 11, 2023]. [5]
+[DATAtab], "Hierarchical Cluster Analysis [Simply explained]," YouTube,
+[Video], Published 01‏ 26‏, 2023. Available:
+<https://youtu.be/8QCBl-xdeZI>. [Accessed: Access 11 11, 2023].
