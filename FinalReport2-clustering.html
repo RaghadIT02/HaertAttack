@@ -1631,43 +1631,51 @@ display: none;
 <pre><code>## package &#39;readxl&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\ragha\AppData\Local\Temp\Rtmp8YLQe3\downloaded_packages</code></pre>
+##  C:\Users\ragha\AppData\Local\Temp\RtmpohzPJW\downloaded_packages</code></pre>
 <table>
 <thead>
 <tr class="header">
 <th>Name</th>
+<th>ID</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Taif alrubeaan</td>
+<td>442202301</td>
 </tr>
 <tr class="even">
 <td>Raghad Alboqami</td>
+<td>442200455</td>
 </tr>
 <tr class="odd">
 <td>Leena Alzahrani</td>
+<td>443200847</td>
 </tr>
 <tr class="even">
 <td>Sarah Alghanim</td>
+<td>442201747</td>
 </tr>
 </tbody>
 </table>
-<table style="width:14%;">
-<colgroup>
-<col width="13%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>## The goal of collecting this dataset</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1 Problem</td>
-</tr>
-</tbody>
-</table>
+<div id="the-goal-of-collecting-this-dataset" class="section level2">
+<h2>The goal of collecting this dataset</h2>
+<p>our goal is to Identify whether the chances of of a heart attack
+occurrence is high or low for the patient</p>
+<p>#classification and clustering goal</p>
+<p>Classification: We will classify target people into different groups
+based on appearance of muilty symptoms of Heart attack disease .This
+will allow us to predict the people who target to have heart attack
+based on certain factors .</p>
+<p>Clustering: We will create a set of clusters for people who have
+similar symptoms. This will allow us to identify groups of people who
+are have the similar symptoms and target to have heart attack .</p>
+<p>We believe that by using these data mining tasks, we can build a
+model that can accurately predict the people target to have heart
+attack.</p>
+</div>
+<div id="problem" class="section level2">
+<h2>1 Problem</h2>
 <p>Recently, Cardiovascular diseases rate has been increased, which
 leads death globally. Early detection of the symptoms is important to
 prevent the disease from fully developing and reduce premature
@@ -1675,18 +1683,10 @@ mortality. In our project, we will study and analyze patients’ data that
 will help us well in identifying symptoms that you don’t recognize as a
 sign of a heart disease and help many people to take precautions by
 predicting the possibility of having a Heart attack.</p>
-<table style="width:26%;">
-<colgroup>
-<col width="26%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>2 Data Mining Task</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>In our project we will use two data mining tasks to help us predict
+</div>
+<div id="data-mining-task" class="section level2">
+<h2>2 Data Mining Task</h2>
+<p>In our project we will use two data mining tasks to help us predict
 the possibility of having cardiovascular diseases which are
 classification and clustering. For classification we will train our
 model to be able to classify if the patient has cardiovascular diseases
@@ -1694,46 +1694,118 @@ or not using (target) class based on a set of medical examinations like
 blood pressure, serum cholesterol , ST depression, etc. For the
 clustering our model will create a set of clusters for the patient who
 have similar characteristics, then these clusters will be used to
-predict new patients’ results.</td>
+predict new patients’ results.</p>
+<p>3 Data The source : <a href="https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k" class="uri">https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k</a>
+Number of objects: 303 Number of attributes: 14</p>
+</div>
+<div id="general-information" class="section level2">
+<h2>General information</h2>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="10%" />
+<col width="53%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute Name</th>
+<th>Data Type</th>
+<th>Description</th>
+<th>Possible Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>age</td>
+<td>Numeric</td>
+<td>Age (in years)</td>
+<td>Range between 29-77</td>
 </tr>
 <tr class="even">
-<td>3 Data The source : <a href="https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k" class="uri">https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k</a>
-Number of objects: 303 Number of attributes: 14</td>
+<td>sex</td>
+<td>Binary</td>
+<td>Gender</td>
+<td>1 = Male; 0 = Female</td>
 </tr>
 <tr class="odd">
-<td>The dataset was sourced from the kaggle website in this URL: <a href="https://www.kaggle.com/datasets/pritsheta/heart-attack" class="uri">https://www.kaggle.com/datasets/pritsheta/heart-attack</a></td>
+<td>cp</td>
+<td>Numeric</td>
+<td>Chest Pain Type</td>
+<td>1: Typical Angina, 2: Atypical Angina, 3: Non-Anginal Pain, 4:
+Asymptomatic</td>
 </tr>
 <tr class="even">
-<td>## General information</td>
+<td>trestbps</td>
+<td>Numeric</td>
+<td>Resting Blood Pressure</td>
+<td>Range between 94-200</td>
 </tr>
 <tr class="odd">
-<td>1- Number of Attributes: 14 2- Number of Objects: 303 3- Type of
-Attributes:</td>
+<td>chol</td>
+<td>Numeric</td>
+<td>Serum Cholesterol in mg/dL</td>
+<td>Range between 126-564</td>
 </tr>
 <tr class="even">
-<td>| Attribute name | Data type | Description | possible values |
-|——————|——————|——————-|——————| | age | Numeric | Age (in years) | range
-between 29-77 | | sex | Binary | gender | 1 = male; 0 =female | | cp |
-Numeric | Chest Pain type | 1: typical angina,2: atypical angina,3:
-non-anginal pain ,4: asymptomatic | | trestbps | Numeric | resting blood
-pressure | range beteen 94-200 | | chol | Numeric | serum cholesterol in
-mg/dL | range between 126-564 | | fbs | Binary | fasting blood sugar
-&gt; 120 mg/dL (likely to be diabetic | 1=true,0=false | | Restecg |
-Binary | Resting electrocardiogram | 0=normal,1=abnormal | | Oldpeak |
-Numeric | ST depression | range between 0-6.20 | | thalach | Numeric |
-heart rate achieved | range between 71-202 | | exang | Binary | exercise
-induced angina | 1 = yes; 0 = no | | slope | Numeric | the slope of the
-peak exercise ST segment | range between 0-2 | | Ca | Numeric | number
-of major vessels | range between 0-4 | | Thal | Numeric | Thalassemia |
-range between 0-3 | | Target | Binary | if the target has disease or not
-| 0 = no disease, 1 = disease |</td>
+<td>fbs</td>
+<td>Binary</td>
+<td>Fasting Blood Sugar &gt; 120 mg/dL (likely to be diabetic)</td>
+<td>1 = True, 0 = False</td>
 </tr>
 <tr class="odd">
-<td>Class label: -target of Heart Attack accurrance -not target of Heart
-Attack accurrance</td>
+<td>Restecg</td>
+<td>Binary</td>
+<td>Resting Electrocardiogram</td>
+<td>0 = Normal, 1 = Abnormal</td>
+</tr>
+<tr class="even">
+<td>Oldpeak</td>
+<td>Numeric</td>
+<td>ST Depression</td>
+<td>Range between 0-6.20</td>
+</tr>
+<tr class="odd">
+<td>thalach</td>
+<td>Numeric</td>
+<td>Heart Rate Achieved</td>
+<td>Range between 71-202</td>
+</tr>
+<tr class="even">
+<td>exang</td>
+<td>Binary</td>
+<td>Exercise Induced Angina</td>
+<td>1 = Yes; 0 = No</td>
+</tr>
+<tr class="odd">
+<td>slope</td>
+<td>Numeric</td>
+<td>The Slope of the Peak Exercise ST Segment</td>
+<td>Range between 0-2</td>
+</tr>
+<tr class="even">
+<td>Ca</td>
+<td>Numeric</td>
+<td>Number of Major Vessels</td>
+<td>Range between 0-4</td>
+</tr>
+<tr class="odd">
+<td>Thal</td>
+<td>Numeric</td>
+<td>Thalassemia</td>
+<td>Range between 0-3</td>
+</tr>
+<tr class="even">
+<td>Target</td>
+<td>Binary</td>
+<td>If the Target Has Disease or Not</td>
+<td>0 = No Disease, 1 = Disease</td>
 </tr>
 </tbody>
 </table>
+<p>Class label: -target of Heart Attack accurrance -not target of Heart
+Attack accurrance</p>
+</div>
 <div id="view-dataset" class="section level2">
 <h2>view dataset:</h2>
 <pre class="r"><code>#install.packages(&quot;readxl&quot;)
